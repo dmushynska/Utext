@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTextCursor>
 #include <QTextEdit>
+#include <QTabBar>
 #include "editor.h"
 
 namespace Ui {
@@ -17,6 +18,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void click(const QModelIndex &index);
+    void addTree(QString string);
     void addFileEdit(const QString& name, const QString& fullPath);
     void closeFile(int index);
 

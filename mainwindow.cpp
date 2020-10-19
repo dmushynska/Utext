@@ -1,7 +1,35 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
+#include <QFileSystemModel>
 #include <QLabel>
+#include <QTreeView>
+
+void MainWindow::addTree(QString string) {
+    QTreeView *view = new QTreeView;
+    QFileSystemModel* model = new QFileSystemModel;
+    view->setModel(model);
+    view->setRootIndex(model->setRootPath(string));
+    for (int i = 1; i < model->columnCount(); i++)
+        view->hideColumn(i);
+    view->setHeaderHidden(false);
+    ui->toolBox->addItem(view, string);
+    connect(view, &QTreeView::doubleClicked, this, &MainWindow::click);
+}
+
+void MainWindow::click(const QModelIndex &index) {
+    ui->toolBox->currentIndex();
+    QFileSystemModel *model = new QFileSystemModel;
+    QFileInfo check_file(model->filePath(index));
+    if (check_file.exists() && check_file.isFile())
+        addFileEdit(model->fileName(index),model->filePath(index));
+//    model->filePath(index);
+//    model->fileName(index);
+    // передать два пути Серёге
+//    if (check_file.exists() && check_file.isFile())
+//        qDebug() << model->filePath(index) << " " << model->fileName(index);
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -9,6 +37,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     QTabBar *bar =  ui->tabWidget->tabBar();
     connect(bar, &QTabBar::tabCloseRequested, this, &MainWindow::closeFile);
+    addTree(QDir::currentPath());
+    addTree("/Users");
+
 }
 
 MainWindow::~MainWindow()
