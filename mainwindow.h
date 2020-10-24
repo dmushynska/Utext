@@ -5,8 +5,9 @@
 #include <QTextCursor>
 #include <QTextEdit>
 #include <QTabBar>
+#include <QFileDialog>
 #include "editor.h"
-
+#include<QtDebug>
 namespace Ui {
 class MainWindow;
 }
@@ -18,10 +19,22 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void click(const QModelIndex &index);
+    void doubleClicked(const QModelIndex &index);
+    void click(const QPoint& index);
     void addTree(QString string);
     void addFileEdit(const QString& name, const QString& fullPath);
     void closeFile(int index);
+    void add_mkdir() {
+        QString string = QFileDialog::getExistingDirectory(this, tr("Open Directory"), "/home",
+                                                           QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+        if (string.count() != 0) {
+            addTree(string);
+//            qDebug() << string;
+        }
+    }
+    void test() {
+        qDebug() << "yes;";
+    }
 
 private slots:
     void on_action_Save_triggered();

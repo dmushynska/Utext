@@ -92,9 +92,9 @@
      <string>File</string>
     </property>
     <addaction name="action_Save"/>
-    <addaction name="action_Cancel"/>
-    <addaction name="action"/>
-    <addaction name="action_2"/>
+    <addaction name="action_Undo"/>
+    <addaction name="action_Cut"/>
+    <addaction name="action_What_is"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -114,32 +114,67 @@
     <bool>false</bool>
    </attribute>
    <addaction name="action_Save"/>
-   <addaction name="action_Cancel"/>
-   <addaction name="action"/>
-   <addaction name="action_2"/>
+   <addaction name="action_Copy"/>
+   <addaction name="action_Cut"/>
+   <addaction name="action_Redo"/>
+   <addaction name="action_Undo"/>
+   <addaction name="actionadd_mkdir"/>
+   <addaction name="action_What_is"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Save">
    <property name="text">
     <string>&amp;Save</string>
    </property>
+   <property name="toolTip">
+    <string>сохранить</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="action_Cancel">
+  <action name="action_Undo">
    <property name="text">
     <string>&amp;Cancel</string>
+   </property>
+   <property name="iconText">
+    <string>Undo</string>
+   </property>
+  </action>
+  <action name="action_Cut">
+   <property name="text">
+    <string>&amp;нож</string>
+   </property>
+   <property name="iconText">
+    <string>Cut</string>
+   </property>
+  </action>
+  <action name="action_What_is">
+   <property name="text">
+    <string>&amp;?</string>
+   </property>
+  </action>
+  <action name="actionadd_mkdir">
+   <property name="text">
+    <string>add mkdir</string>
+   </property>
+  </action>
+  <action name="action_Copy">
+   <property name="text">
+    <string>Copy</string>
+   </property>
+  </action>
+  <action name="action_Redo">
+   <property name="text">
+    <string>отменить отмену</string>
+   </property>
+   <property name="iconText">
+    <string>Redo</string>
    </property>
   </action>
   <action name="action">
    <property name="text">
-    <string>&amp;нож</string>
-   </property>
-  </action>
-  <action name="action_2">
-   <property name="text">
-    <string>&amp;?</string>
+    <string>Redo</string>
    </property>
   </action>
  </widget>

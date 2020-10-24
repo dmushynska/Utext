@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QFile>
 #include <QMessageBox>
-
+#include <QTextEdit>
 namespace Ui {
 class Editor;
 }
@@ -22,10 +22,9 @@ public:
     bool setValue(const QString& newFullPath, Ui::MainWindow *mui);
     const QString& getFullPath(void);
     ~Editor();
-
+    QTextEdit *getTextEdit();
 private:
     Ui::Editor *ui;
     QString fullPath;
 };
-
 #endif // EDITOR_H

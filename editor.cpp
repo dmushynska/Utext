@@ -2,6 +2,12 @@
 #include "ui_editor.h"
 #include "ui_mainwindow.h"
 
+
+QTextEdit *Editor::getTextEdit () {
+    return ui->textEditor;
+}
+
+
 Editor::Editor(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Editor)
