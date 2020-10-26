@@ -95,6 +95,7 @@
     <addaction name="action_Undo"/>
     <addaction name="action_Cut"/>
     <addaction name="action_What_is"/>
+    <addaction name="action_Find"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -119,6 +120,7 @@
    <addaction name="action_Redo"/>
    <addaction name="action_Undo"/>
    <addaction name="actionadd_mkdir"/>
+   <addaction name="action_Find"/>
    <addaction name="action_What_is"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -175,6 +177,11 @@
   <action name="action">
    <property name="text">
     <string>Redo</string>
+   </property>
+  </action>
+  <action name="action_Find">
+   <property name="text">
+    <string>&amp;Find</string>
    </property>
   </action>
  </widget>

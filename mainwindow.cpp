@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "window_find_replace.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QFileSystemModel>
@@ -8,8 +9,13 @@
 void MainWindow::addTree(QString string) {
     QTreeView *view = new QTreeView;
     QFileSystemModel* model = new QFileSystemModel;
+    model->setReadOnly(false);
     view->setModel(model);
     view->setRootIndex(model->setRootPath(string));
+    view->setDragEnabled(true);
+    view->setAcceptDrops(true);
+    view -> setDragDropMode ( QAbstractItemView :: InternalMove );
+    view->setDropIndicatorShown(true);
     for (int i = 1; i < model->columnCount(); i++)
         view->hideColumn(i);
     view->setHeaderHidden(false);
@@ -125,8 +131,13 @@ ui->tabWidget->widget(index)->~QWidget();
 void MainWindow::addFileEdit(const QString& name, const QString& fullPath) {
     Editor *newFile = new Editor;
 
-    if (newFile->setValue(fullPath, ui)) {
-        ui->tabWidget->addTab(newFile, name);
+    int pos = newFile->setValue(fullPath, ui);
+    if (pos > -1) {
+        if (pos == ui->tabWidget->count())
+            ui->tabWidget->addTab(newFile, name);
+        else
+            delete newFile;
+        ui->tabWidget->setCurrentIndex(pos);
     }
     else {
          delete newFile;
@@ -136,18 +147,22 @@ void MainWindow::addFileEdit(const QString& name, const QString& fullPath) {
 
 void MainWindow::on_action_Save_triggered()
 {
-//    addCursor = new QTextCursor(ui->textEdit->textCursor());
-//    QTextCursor addCursor(ui->textEdit->textCursor());
-//    addCursor->movePosition(QTextCursor::Down);
-//    addCursor.insertText("Привет");
-//    QFile file("/Users/solianovsk/Downloads/utext/utext/text");
-//    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-//        QMessageBox messageBox;
-//        messageBox.critical(this,"Error","PErmision ERROR !");
-//        messageBox.setFixedSize(500,200);
-//    }
-//    else {
-//        file.write(ui->textEdit->toPlainText().toUtf8());
-//        file.close();
-//    }
+    if (ui->tabWidget->count())
+        qobject_cast<Editor*>(ui->tabWidget->currentWidget())->saveFile();
+}
+
+void MainWindow::on_action_Find_triggered()
+{
+ window_Find_Replace* check = new window_Find_Replace(this);
+check->show();
+}
+
+void MainWindow::windowFind(const QString& text) {
+    if (ui->tabWidget->count())
+        qobject_cast<Editor*>(ui->tabWidget->currentWidget())->findFile(text);
+}
+
+void MainWindow::windowReplace(const QString& textFind, const QString& textReplace) {
+    if (ui->tabWidget->count())
+        qobject_cast<Editor*>(ui->tabWidget->currentWidget())->replaceFile(textFind, textReplace);
 }

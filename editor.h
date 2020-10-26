@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QTextEdit>
+#include "Highlighter.h"
 namespace Ui {
 class Editor;
 }
@@ -19,12 +20,16 @@ class Editor : public QWidget
 
 public:
     explicit Editor(QWidget *parent = nullptr);
-    bool setValue(const QString& newFullPath, Ui::MainWindow *mui);
+    int setValue(const QString& newFullPath, Ui::MainWindow *mui);
+    void saveFile(void);
     const QString& getFullPath(void);
     ~Editor();
     QTextEdit *getTextEdit();
+    void findFile(const QString& text);
+    void replaceFile(const QString& textFind, const QString& textReaplace);
 private:
     Ui::Editor *ui;
     QString fullPath;
+    Highlighter *mx_highlighter;
 };
 #endif // EDITOR_H

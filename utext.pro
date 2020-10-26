@@ -27,15 +27,20 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    editor.cpp
+    editor.cpp \
+    window_find_replace.cpp \
+    Highlighter.cpp
 
 HEADERS += \
         mainwindow.h \
-    editor.h
+    editor.h \
+    window_find_replace.h \
+    Highlighter.h
 
 FORMS += \
         mainwindow.ui \
-    editor.ui
+    editor.ui \
+    window_find_replace.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
