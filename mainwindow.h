@@ -24,8 +24,8 @@ public:
     void addTree(QString string);
     void addFileEdit(const QString& name, const QString& fullPath);
     void closeFile(int index);
-    void windowFind(const QString& text);
-    void windowReplace(const QString& textFind, const QString& textReplace);
+    void windowFind(const QString& text, bool isRegex, QTextDocument::FindFlags flags);
+    void windowReplace(const QString& textFind, const QString& textReplace, bool isRegex, QTextDocument::FindFlags flags);
     void add_mkdir() {
         QString string = QFileDialog::getExistingDirectory(this, tr("Open Directory"), "/home",
                                                            QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);

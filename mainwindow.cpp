@@ -189,12 +189,12 @@ void MainWindow::on_action_Find_triggered() {
     check->show();
 }
 
-void MainWindow::windowFind(const QString &text) {
+void MainWindow::windowFind(const QString& text, bool isRegex, QTextDocument::FindFlags flags) {
     if (ui->tabWidget->count())
-        qobject_cast<Editor *>(ui->tabWidget->currentWidget())->findFile(text);
+        qobject_cast<Editor*>(ui->tabWidget->currentWidget())->findFile(text, isRegex, flags);
 }
 
-void MainWindow::windowReplace(const QString &textFind, const QString &textReplace) {
+void MainWindow::windowReplace(const QString& textFind, const QString& textReplace, bool isRegex, QTextDocument::FindFlags flags) {
     if (ui->tabWidget->count())
-        qobject_cast<Editor *>(ui->tabWidget->currentWidget())->replaceFile(textFind, textReplace);
+        qobject_cast<Editor*>(ui->tabWidget->currentWidget())->replaceFile(textFind, textReplace, isRegex, flags);
 }

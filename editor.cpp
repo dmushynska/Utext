@@ -56,29 +56,26 @@ void Editor::saveFile(void) {
     file.close();
 }
 
-void Editor::findFile(const QString& text) {
-    if (this->ui->textEditor->find(text) == 0) {
-        auto cursor = this->ui->textEditor->textCursor();
-        cursor.movePosition(QTextCursor::Start);
-        this->ui->textEditor->setTextCursor(cursor);
-        this->ui->textEditor->find(text);
-    }
+static bool isExist(const QString& text, bool isRegex, QTextDocument::FindFlags flags, Ui::Editor *ui) {
+    return isRegex ?  ui->textEditor->find(QRegExp(text), flags) : ui->textEditor->find(text, flags);
 }
 
-void Editor::replaceFile(const QString& textFind, const QString& textReaplace) {
-    if (this->ui->textEditor->find(textFind) == 0) {
+
+bool Editor::findFile(const QString& text, bool isRegex, QTextDocument::FindFlags flags) {
+    if (isExist(text, isRegex, flags, ui) == 0) {
         auto cursor = this->ui->textEditor->textCursor();
-        cursor.movePosition(QTextCursor::Start);
+        if (flags & QTextDocument::FindBackward)
+            cursor.movePosition(QTextCursor::End);
+        else
+            cursor.movePosition(QTextCursor::Start);
         this->ui->textEditor->setTextCursor(cursor);
-        if (this->ui->textEditor->find(textFind)) {
-            auto cursor = this->ui->textEditor->textCursor();
-            cursor.insertText(textReaplace);
-            cursor.setPosition(cursor.position() - textReaplace.size());
-            cursor.setPosition(cursor.position() + textReaplace.size(), QTextCursor::KeepAnchor);
-            this->ui->textEditor->setTextCursor(cursor);
-        }
+        return isExist(text, isRegex, flags, ui);
     }
-    else {
+    return true;
+}
+
+void Editor::replaceFile(const QString& textFind, const QString& textReaplace, bool isRegex, QTextDocument::FindFlags flags) {
+    if (this->findFile(textFind, isRegex, flags)) {
         auto cursor = this->ui->textEditor->textCursor();
         cursor.insertText(textReaplace);
         cursor.setPosition(cursor.position() - textReaplace.size());

@@ -25,8 +25,8 @@ public:
     const QString& getFullPath(void);
     ~Editor();
     QTextEdit *getTextEdit();
-    void findFile(const QString& text);
-    void replaceFile(const QString& textFind, const QString& textReaplace);
+    bool findFile(const QString& text, bool isRegex, QTextDocument::FindFlags flags);
+    void replaceFile(const QString& textFind, const QString& textReaplace, bool isRegex, QTextDocument::FindFlags flags);
 private:
     Ui::Editor *ui;
     QString fullPath;
