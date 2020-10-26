@@ -26,7 +26,17 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QToolBox" name="toolBox"/>
+      <widget class="QToolBox" name="toolBox">
+       <property name="tabletTracking">
+        <bool>false</bool>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+      </widget>
       <widget class="QTabWidget" name="tabWidget">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -94,7 +104,7 @@
     <addaction name="action_Save"/>
     <addaction name="action_Undo"/>
     <addaction name="action_Cut"/>
-    <addaction name="action_What_is"/>
+    <addaction name="action_Paste"/>
     <addaction name="action_Find"/>
    </widget>
    <addaction name="menuFile"/>
@@ -116,12 +126,13 @@
    </attribute>
    <addaction name="action_Save"/>
    <addaction name="action_Copy"/>
+   <addaction name="action_Paste"/>
    <addaction name="action_Cut"/>
    <addaction name="action_Redo"/>
    <addaction name="action_Undo"/>
    <addaction name="actionadd_mkdir"/>
    <addaction name="action_Find"/>
-   <addaction name="action_What_is"/>
+   <addaction name="action_Theme"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Save">
@@ -142,28 +153,46 @@
    <property name="iconText">
     <string>Undo</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
   </action>
   <action name="action_Cut">
    <property name="text">
-    <string>&amp;нож</string>
+    <string>&amp;Cut</string>
    </property>
    <property name="iconText">
     <string>Cut</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
   </action>
-  <action name="action_What_is">
+  <action name="action_Paste">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <property name="text">
-    <string>&amp;?</string>
+    <string>&amp;Paste</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
    </property>
   </action>
   <action name="actionadd_mkdir">
    <property name="text">
     <string>add mkdir</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="action_Copy">
    <property name="text">
     <string>Copy</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
    </property>
   </action>
   <action name="action_Redo">
@@ -173,15 +202,21 @@
    <property name="iconText">
     <string>Redo</string>
    </property>
-  </action>
-  <action name="action">
-   <property name="text">
-    <string>Redo</string>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Z</string>
    </property>
   </action>
   <action name="action_Find">
    <property name="text">
     <string>&amp;Find</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="action_Theme">
+   <property name="text">
+    <string>&amp;Theme</string>
    </property>
   </action>
  </widget>

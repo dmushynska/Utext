@@ -19,8 +19,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void doubleClicked(const QModelIndex &index);
-    void click(const QPoint& index);
+    void click(const QModelIndex &index);
+    void clickMouse(const QPoint& index);
     void addTree(QString string);
     void addFileEdit(const QString& name, const QString& fullPath);
     void closeFile(int index);
@@ -31,12 +31,11 @@ public:
                                                            QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
         if (string.count() != 0) {
             addTree(string);
-//            qDebug() << string;
         }
     }
-    void test() {
-        qDebug() << "yes;";
-    }
+//    void test() {
+//        qDebug() << "yes;";
+//    }
 
 private slots:
     void on_action_Save_triggered();
@@ -46,6 +45,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QTextCursor *addCursor;
+    bool isDark = true;
 };
 
 #endif // MAINWINDOW_H

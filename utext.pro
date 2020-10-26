@@ -29,20 +29,25 @@ SOURCES += \
         mainwindow.cpp \
     editor.cpp \
     window_find_replace.cpp \
-    Highlighter.cpp
+    Highlighter.cpp \
+    help.cpp
 
 HEADERS += \
         mainwindow.h \
     editor.h \
     window_find_replace.h \
-    Highlighter.h
+    Highlighter.h \
+    help.h
 
 FORMS += \
         mainwindow.ui \
     editor.ui \
-    window_find_replace.ui
+    window_find_replace.ui \
+    help.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES +=
