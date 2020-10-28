@@ -22,6 +22,15 @@ void MainWindow::addTree(QString string) {
     for (int i = 1; i < model->columnCount(); i++)
         view->hideColumn(i);
     view->setHeaderHidden(false);
+    for (int i = 0; i < ui->toolBox->count(); i++) {
+        if (ui->toolBox->itemText(i) == string) {
+            delete model;
+            delete view;
+            return;
+        }
+    }
+    if (ui->toolBox->count() == 0)
+        ui->toolBox->show();
     ui->toolBox->addItem(view, string);
     view->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(view, &QTreeView::clicked, this, &MainWindow::click);
@@ -104,11 +113,14 @@ void MainWindow::clickMouse(const QPoint &point) {
         });
 
     if (!check_file.isFile() && !check_file.isDir()) {
-        myMenu.addAction("add mkdir", this, [this]() {
+        myMenu.addAction("open mkdir", this, [this]() {
             this->add_mkdir();
         });
         myMenu.addAction("close mkdir " + ui->toolBox->itemText(ui->toolBox->currentIndex()), this, [this]() {
             this->ui->toolBox->removeItem(ui->toolBox->currentIndex());
+            if (this->ui->toolBox->count() == 0) {
+                this->ui->toolBox->hide();
+            }
         });
     }
     myMenu.exec(globalPos);
