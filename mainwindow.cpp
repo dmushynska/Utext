@@ -8,6 +8,7 @@
 #include "ui_mainwindow.h"
 #include "window_find_replace.h"
 
+
 void MainWindow::addTree(QString string) {
     QTreeView *view = new QTreeView;
     QFileSystemModel *model = new QFileSystemModel;
@@ -25,6 +26,18 @@ void MainWindow::addTree(QString string) {
     view->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(view, &QTreeView::clicked, this, &MainWindow::click);
     connect(view, &QTreeView::customContextMenuRequested, this, &MainWindow::clickMouse);
+    connect(model, &QFileSystemModel::fileRenamed, this, &MainWindow::renameFile);
+}
+
+void MainWindow::renameFile(const QString &path, const QString &oldName, const QString &newName) {
+    QString oldFile = path + "/" + oldName;
+    for (int i = 0; i < ui->tabWidget->count(); i++) {
+        if (oldFile == qobject_cast<Editor*>(ui->tabWidget->widget(i))->getFullPath()) {
+            qobject_cast<Editor*>(ui->tabWidget->widget(i))->renameFile(path + "/" + newName);
+            ui->tabWidget->setTabText(i, newName);
+            return;
+        }
+    }
 }
 
 void MainWindow::click(const QModelIndex &index) {
@@ -139,29 +152,29 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                 qobject_cast<Editor *>(this->ui->tabWidget->widget(i))->getTextEdit()->paste();
         }
     });
-    connect(ui->action_Theme, &QAction::triggered, this, [this] {
-        if (isDark == true) {
-            isDark = false;
-            auto style_sheet = QString("font-size: 16px;").arg(QPalette().color(QPalette::Base).rgba(), 0, 16);
-            this->setStyleSheet(style_sheet);
-        } else {
-            isDark = true;
-            auto style_sheet = QString("font-size: 16px;"
-                                    "background-color: #%1;")
-                                        .arg(QPalette().color(QPalette::Base).rgba(), 0, 16);
-            this->setStyleSheet(style_sheet);
-        }
-    });
-    auto style_sheet = QString("font-size: 16px;").arg(QPalette().color(QPalette::Base).rgba(), 0, 16);
+    auto style_sheet = QString("font-size: 16px;");
     this->setStyleSheet(style_sheet);
+    mx_helpWidget = new Help;
+    ui->lRight->addWidget(mx_helpWidget);
+    mx_helpWidget->show();
+    ui->tabWidget->hide();
 }
 
 MainWindow::~MainWindow() {
     delete ui;
+    delete mx_helpWidget;
 }
 
 void MainWindow::closeFile(int index) {
     ui->tabWidget->widget(index)->~QWidget();
+    if (ui->tabWidget->count() == 0) {
+        if (ui->tabWidget->isVisible()) {
+            ui->tabWidget->hide();
+            if (!mx_helpWidget->isVisible()) {
+                mx_helpWidget->show();
+            }
+        }
+    }
 }
 
 void MainWindow::addFileEdit(const QString &name, const QString &fullPath) {
@@ -169,6 +182,12 @@ void MainWindow::addFileEdit(const QString &name, const QString &fullPath) {
 
     int pos = newFile->setValue(fullPath, ui);
     if (pos > -1) {
+        if (!ui->tabWidget->isVisible()) {
+            ui->tabWidget->show();
+            if (mx_helpWidget->isVisible()) {
+                mx_helpWidget->hide();
+            }
+        }
         if (pos == ui->tabWidget->count())
             ui->tabWidget->addTab(newFile, name);
         else
@@ -197,4 +216,15 @@ void MainWindow::windowFind(const QString& text, bool isRegex, QTextDocument::Fi
 void MainWindow::windowReplace(const QString& textFind, const QString& textReplace, bool isRegex, QTextDocument::FindFlags flags) {
     if (ui->tabWidget->count())
         qobject_cast<Editor*>(ui->tabWidget->currentWidget())->replaceFile(textFind, textReplace, isRegex, flags);
+}
+
+void MainWindow::on_actionOpen_File_triggered()
+{
+
+     QString string = QFileDialog::getOpenFileName(this, tr("Open file"), "/");
+    if (string.count() != 0) {
+        QFileInfo file(string);
+
+        addFileEdit(file.baseName(), string);
+    }
 }

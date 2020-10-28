@@ -14,7 +14,6 @@ class Help : public QWidget
 public:
     explicit Help(QWidget *parent = nullptr);
     ~Help();
-
 private:
     Ui::Help *ui;
 };

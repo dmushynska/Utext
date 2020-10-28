@@ -19,7 +19,12 @@ Editor::Editor(QWidget *parent) :
 
 
 const QString& Editor::getFullPath(void) {
-    return fullPath;
+    return mx_fullPath;
+}
+
+void Editor::renameFile(const QString& newFullPath) {
+    ui->fullPathFile->setText(newFullPath);
+    mx_fullPath = newFullPath;
 }
 
 int Editor::setValue(const QString& newFullPath, Ui::MainWindow *mui) {
@@ -38,12 +43,12 @@ int Editor::setValue(const QString& newFullPath, Ui::MainWindow *mui) {
     QString text(file.readAll());
     ui->textEditor->setText(text);
     ui->fullPathFile->setText(newFullPath);
-    fullPath = newFullPath;
+    mx_fullPath = newFullPath;
     return mui->tabWidget->count();
 }
 
 void Editor::saveFile(void) {
-    QFile file(this->fullPath);
+    QFile file(this->mx_fullPath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QMessageBox messageBox;
         messageBox.critical(this,"Error","PErmision ERROR !");
