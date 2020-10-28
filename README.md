@@ -10,7 +10,7 @@ You can use this app to write edit text files.
 - [x] _display opened project in **Tree-View**_
 
 # uText
-<!-- ![Images](https://user-images.githubusercontent.com/44983824/96278232-f1920600-0fdd-11eb-9bbd-2e853bd815d8.png) -->
+![Images](https://user-images.githubusercontent.com/olanser/Utext/main/.github/images/screen.png)
 
 # Instalation
 1. `git clone https://github.com/olanser/Utext.git`
